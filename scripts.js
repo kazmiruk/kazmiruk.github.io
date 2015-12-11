@@ -46,7 +46,6 @@ app.controller('appController', function ($scope, $timeout) {
 	};
 
 	var _prepare_cards = function(result) {
-		console.log(result);
 		$timeout(function() {
 			for (var i in result.rows) {
 				$scope.cards[result.rows[i].doc.column_id][result.rows[i].doc.order] = result.rows[i].doc;
