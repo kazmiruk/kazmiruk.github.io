@@ -1,0 +1,46 @@
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+	display: none !important;
+}
+
+.b__card {
+	clear: both;
+}
+
+.b__card:hover > .b_card_controller {
+	display: inline-block;
+}
+
+.b_card_controller {
+	float:right;
+	display: none;
+	background: #DDDDDD;
+	margin-top: -35px;
+}
+
+.b_card_controller > div {
+	display: inline-block;
+	float: left;
+	cursor: pointer;
+}
+
+.b__card_image_holder {
+	width: 45px;
+	height: 45px;
+	float: left;
+	overflow: hidden;
+	margin-right: 5px;
+	border: 1px solid;
+}
+
+.b__card_image_holder > img {
+	width: 45px;
+}
+
+.b__card_image_holder > span {
+	font-size: 25px;
+	padding-left: 3px;
+}
+
+.b__card_info_name {
+	font-weight: bolder;
+}
