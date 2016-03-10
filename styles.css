@@ -5,11 +5,11 @@ a, a:focus, a:hover {
 
 html, body {
     height: 100%;
-    overflow-y: hidden;
 }
 
 body {
     text-align: center;
+    margin-top: 50px;
 }
 
 .img-main {
@@ -47,9 +47,6 @@ body {
 }
 
 @media (min-width: 768px) {
-    .site-wrapper-inner {
-        vertical-align: middle;
-    }
 
     .cover-container {
         width: 100%;
