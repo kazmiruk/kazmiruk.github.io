@@ -5,6 +5,7 @@ a, a:focus, a:hover {
 
 html, body {
     height: 100%;
+    overflow-y: hidden;
 }
 
 body {
