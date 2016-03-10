@@ -1,46 +1,62 @@
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-	display: none !important;
+a, a:focus, a:hover {
+    color: #ff8562;
+    text-decoration: none;
 }
 
-.b__card {
-	clear: both;
+html, body {
+    height: 100%;
 }
 
-.b__card:hover > .b_card_controller {
-	display: inline-block;
+body {
+    text-align: center;
 }
 
-.b_card_controller {
-	float:right;
-	display: none;
-	background: #DDDDDD;
-	margin-top: -35px;
+.img-main {
+    width: 45%;
+    border-radius: 50%;
 }
 
-.b_card_controller > div {
-	display: inline-block;
-	float: left;
-	cursor: pointer;
+.text-left {
+    float: left;
 }
 
-.b__card_image_holder {
-	width: 45px;
-	height: 45px;
-	float: left;
-	overflow: hidden;
-	margin-right: 5px;
-	border: 1px solid;
+.text-right {
+    float: right;
 }
 
-.b__card_image_holder > img {
-	width: 45px;
+.icon {
+    width: 50px
 }
 
-.b__card_image_holder > span {
-	font-size: 25px;
-	padding-left: 3px;
+.site-wrapper {
+    display: table;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
 }
 
-.b__card_info_name {
-	font-weight: bolder;
+.site-wrapper-inner {
+    display: table-cell;
+    vertical-align: top;
+}
+
+.cover-container {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media (min-width: 768px) {
+    .site-wrapper-inner {
+        vertical-align: middle;
+    }
+
+    .cover-container {
+        width: 100%;
+    }
+}
+
+@media (min-width: 992px) {
+    .cover-container {
+        width: 400px;
+    }
 }

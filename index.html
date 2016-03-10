@@ -4,248 +4,42 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta http-equiv="x-ua-compatible" content="ie=edge">
-
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
-		<style>
-			[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-				display: none !important;
-			}
-
-			.b__card {
-				clear: both;
-			}
-			
-			.b__card:hover > .b_card_controller {
-				display: inline-block;
-			}
-
-			.b_card_controller {
-				float:right;
-				display: none;
-				background: #DDDDDD;
-				margin-top: -35px;
-			}
-
-			.b_card_controller > div {
-				display: inline-block;
-				float: left;
-				cursor: pointer;
-			}
-
-			.b__card_image_holder {
-				width: 45px;
-				height: 45px;
-				float: left;
-				overflow: hidden;
-				margin-right: 5px;
-				border: 1px solid;
-			}
-
-			.b__card_image_holder > img {
-				width: 45px;
-			}
-
-			.b__card_image_holder > span {
-				font-size: 25px;
-				padding-left: 3px;
-			}
-			
-			.b__card_info_name {
-				font-weight: bolder;
-			}
-		</style>
+        <link rel="stylesheet" href="styles.css"/>
 	</head>
-	<body ng-cloak ng-controller="appController" ng-init="init(['Новые', 'В работе', 'Назначено собеседование', 'Приняты']); addCardShow = false;">
-		<table class="table">
-			<thead>
-				<tr>
-					<th ng-repeat="el in columns track by $index">{{ el }}</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td ng-repeat="el in cards track by $index">
-						<div class="b__card" ng-repeat="card in el track by $index">
-							<div class="b__card_image_holder">
-								<img ng-if="card.avatar" ng-src="{{ card.avatar }}">
-								<span ng-if="!card.avatar">{{ card.first_name[0] }}{{ card.last_name[0] }}</span>
-							</div>
-							<div class="b__card_info">
-								<span class="b__card_info_name">{{ card.first_name }} {{ card.last_name }}</span>
-								<br/>
-								<small>{{ card.city }}, {{ card.age }}</small>
-							</div>
-							<div class="b_card_controller">
-								<div ng-if="card.column_id > 0" ng-click="moveLeft(card)">←</div>
-								<div ng-if="card.order > 0" ng-click="moveUp(card)">↑</div>
-								<div ng-if="card.column_id < columns.length - 1" ng-click="moveRight(card)">→</div>
-								<div ng-if="card.order < el.length - 1" ng-click="moveDown(card)">↓</div>
-							</div>
-						</div>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-
-		<a href="#" ng-click="addCardShow = !addCardShow">Add new card</a>
-		<div ng-show="addCardShow">
-			<div ng-if="showError" class="alert alert-danger" role="alert">All fields are required and age should be in range 14 and 99</div>
-
-			<form>
-				<fieldset class="form-group">
-					<input type="text" required="required" class="form-control" id="first_name" placeholder="First_name">
-				</fieldset>
-				<fieldset class="form-group">
-					<input type="text" required="required" class="form-control" id="last_name" placeholder="Last name">
-				</fieldset>
-				<fieldset class="form-group">
-					<input type="number" required="required" min="14" step="1" max="99" class="form-control" id="age" placeholder="Age">
-				</fieldset>
-				<fieldset class="form-group">
-					<input type="text" required="required" class="form-control" id="city" placeholder="City">
-				</fieldset>
-				<fieldset class="form-group">
-					<input type="url" class="form-control" id="avatar" placeholder="Avatar">
-				</fieldset>
-				<button type="button" class="btn btn-primary" ng-click="addNewRow()">Add new card</button>
-			</form>
-		</div>
-
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.1.1/js/tether.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/pouchdb/5.1.0/pouchdb.min.js"></script>
-
-		<script>
-			var app = angular.module('app', []);
-
-			app.controller('appController', function ($scope, $timeout) {
-				var db = new PouchDB('recrubase');
-
-				var _prepare_cards = function(result) {
-					console.log(result);
-					$timeout(function() {
-						for (var i in result.rows) {
-							$scope.cards[result.rows[i].doc.column_id][result.rows[i].doc.order] = result.rows[i].doc;
-						}
-					});
-				};
-
-				var _get_cards = function() {
-					$scope.cards = [];
-
-					for(var i = 0; i < $scope.columns.length; i++) {
-						$scope.cards[i] = [];
-					}
-
-					db.allDocs({include_docs: true}).then(_prepare_cards).catch(function (err) {
-						console.log(err);
-					});
-				};
-
-			  	$scope.init = function(columns) {
-					$scope.columns = columns;
-					_get_cards();
-				};
-
-				var _move_between_columns = function(card, direction) {
-					var updateBulk = [];
-
-					for (var i = card.order + 1; i < $scope.cards[card.column_id].length; i++) {
-						var _card = $scope.cards[card.column_id][i];
-						_card.order = _card.order - 1;
-						updateBulk[updateBulk.length] = _card;
-					}
-
-					card.column_id = card.column_id + direction;
-					card.order = $scope.cards[card.column_id].length;
-					updateBulk[updateBulk.length] = card;
-
-					db.bulkDocs(updateBulk).then(function(response) {
-						_get_cards();
-					});
-				};
-
-				$scope.moveLeft = function(card) {
-					if (card.column_id >= 1) {
-						_move_between_columns(card, -1);
-					}
-				};
-				
-				$scope.moveRight = function(card) {
-					if (card.column_id <= $scope.columns.length - 2) {
-						_move_between_columns(card, 1);
-					}
-				};
-
-				var _change_order = function(card, direction) {
-					var updateBulk = [];
-					card.order = card.order - direction;
-					updateBulk[updateBulk.length] = card;
-					$scope.cards[card.column_id][card.order].order = $scope.cards[card.column_id][card.order].order + direction;
-					updateBulk[updateBulk.length] = $scope.cards[card.column_id][card.order];
-
-					db.bulkDocs(updateBulk).then(function(response) {
-						_get_cards();
-					});
-				}; 
-
-				$scope.moveUp = function(card) {
-					if (card.order >= 1) {
-						_change_order(card, 1);
-					}
-				};
-
-				$scope.moveDown = function(card) {
-					if (card.order <= $scope.cards[card.column_id].length - 2) {
-						_change_order(card, -1);
-					}
-				};
-
-				$scope.addNewRow = function() {
-					var first_name_el = angular.element("#first_name"),
-					    last_name_el = angular.element("#last_name"),
-					    age_el = angular.element("#age"),
-					    city_el = angular.element("#city"),
-					    avatar_el = angular.element("#avatar"),
-					    first_name = first_name_el.val().trim(),
-					    last_name = last_name_el.val().trim(),
-					    age = age_el.val().trim(),
-					    city = city_el.val().trim(),
-					    avatar = avatar_el.val().trim();
-
-					if (first_name && last_name && age && age >= age_el.attr('min') && age <= age_el.attr('max') && city) {
-						var card = {
-							"order": $scope.cards[0].length,
-							"column_id": 0,
-							"first_name": first_name,
-							"last_name": last_name,
-							"age": age,
-							"city": city,
-							"avatar": avatar || null
-						};
-						db.post(card).then(function(response) {
-							card._id = response.id;
-							card._rev = response.rev;
-							$timeout(function() {
-								$scope.cards[0][$scope.cards[0].length] = card;
-							});
-							first_name_el.val('');
-							last_name_el.val('');
-							age_el.val('')
-							city_el.val('');
-							avatar_el.val('');
-							$scope.addCardShow = false;
-							$scope.showError = false;
-						}).catch(function (err) {
-							console.log(err);
-						});
-					} else {
-						$scope.showError = true;
-					}
-				};
-			});
-		</script>
+	<body>
+        <div class="site-wrapper">
+            <div class="site-wrapper-inner">
+                <div class="cover-container">
+                    <img class="img-main" src="/img/avatar.jpg" />
+                    <h1>Evgenii Kazmiruk</h1>
+                    <p>WEBDEV / GAMEDEV / PROJECT MANAGEMENT</p>
+                    <p>
+                        <a target="_blanl" href="https://github.com/kazmiruk">
+                            <img class="icon" src="/img/github.png" title="Github" />
+                        </a>
+                        <a target="_blank" href="https://www.linkedin.com/in/evgenii-kazmiruk-687046a1">
+                            <img class="icon" src="/img/linkedin.png" title="LinkedIn" />
+                        </a>
+                        <a href="https://stackoverflow.com/users/4322636/evgenii-kazmiruk?tab=profile" target="_blank">
+                            <img class="icon" src="/img/stackoverflow.png" title="StackOverflow" />
+                        </a>
+                        <a href="https://twitter.com/kazmirukevgeniy" target="_blank">
+                            <img class="icon" src="/img/twitter.png" title="Twitter" />
+                        </a>
+                        <a href="https://plus.google.com/u/0/104049915790033516942/" target="_blank">
+                            <img class="icon" src="/img/googleplus.png" title="Google Plus" />
+                        </a>
+                    </p>
+                    <div>
+                        <p class="text-left">
+                            <a href="mailto:kazmiruk.evgeniy@gmail.com">kazmiruk.evgeniy@gmail.com</a>
+                        </p>
+                        <p class="text-right">
+                            +7 913 513 94 85
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
 	</body>
 </html>
