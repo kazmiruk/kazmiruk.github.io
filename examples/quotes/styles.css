@@ -1,0 +1,19 @@
+body {
+    margin-top: 60px;
+}
+
+p#quote {
+    font-size: 30px;
+}
+
+a#tweet {
+    text-underline: none;
+}
+
+#tweet > img {
+    width: 40px;
+}
+
+.text-italic {
+    font-style: italic;
+}
