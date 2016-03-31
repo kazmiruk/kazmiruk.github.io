@@ -20,7 +20,7 @@ jQuery.load(function() {
         _setIcon(storage.weather[0].main);
 
         jQuery('#content > h3').text(storage.name + ", " + storage.sys.country);
-        jQuery('#temp > span').html(storage.main.temp);
+        jQuery('#temp > span').html(Math.round(storage.main.temp));
         jQuery('#ftemp > span').html(storage.main.ftemp);
 
         jQuery('#content').show();
