@@ -5,7 +5,7 @@ jQuery.load(function() {
     var _setIcon = function(weather) {
         var weatherL = weather.toLowerCase();
 
-        if (!(weatherL in ['drizzle', 'clouds', 'rain', 'snow', 'thunderstom', 'clear'])) {
+        if (['drizzle', 'clouds', 'rain', 'snow', 'thunderstom', 'clear'].indexOf(weatherL) === -1) {
             weatherL = "clouds";
         }
 
