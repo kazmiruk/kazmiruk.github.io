@@ -1,4 +1,4 @@
-jQuery.load(function() {
+jQuery(document).ready(function() {
     var storage = {};
     var q = undefined;
 
