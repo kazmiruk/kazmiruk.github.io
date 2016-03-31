@@ -4,6 +4,9 @@ jQuery(document).ready(function() {
 });
 
 var getQuote = function() {
+    jQuery('#preloader').show();
+    jQuery('#content').hide();
+
     jQuery.ajax({
         headers: {
             "X-Mashape-Key": "OivH71yd3tmshl9YKzFH7BTzBVRQp1RaKLajsnafgL2aPsfP9V",
@@ -12,12 +15,14 @@ var getQuote = function() {
         },
         url: 'https://andruxnet-random-famous-quotes.p.mashape.com/cat=',
         success: function(response) {
-            var r = JSON.parse(response),
-                tweet = r.quote + " " + r.author;
+            var r = JSON.parse(response);
+            var tweet = r.quote + " " + r.author;
 
             jQuery('#quote').text('"' + r.quote + '"');
             jQuery('#author').text(r.author);
             jQuery('#tweet').attr('href', 'https://twitter.com/intent/tweet?hashtags=quotes&related=freecodecamp&text=' + encodeURIComponent(tweet));
+            jQuery('#preloader').hide();
+            jQuery('#content').show();
         }
     });
 }

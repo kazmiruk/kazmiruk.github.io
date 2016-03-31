@@ -1,0 +1,15 @@
+body {
+    margin-top: 60px;
+}
+
+#content {
+    display: none;
+}
+
+#ftemp {
+    display: none;
+}
+
+#content > img{
+    width: 100px;
+}

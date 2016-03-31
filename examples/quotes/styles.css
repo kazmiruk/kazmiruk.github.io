@@ -2,6 +2,10 @@ body {
     margin-top: 60px;
 }
 
+#content {
+    display: none;
+}
+
 p#quote {
     font-size: 30px;
 }

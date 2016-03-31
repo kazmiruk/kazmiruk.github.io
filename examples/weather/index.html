@@ -2,7 +2,7 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Simple Quote Machine</title>
+    <title>Weather App</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="styles.css"/>
 </head>
@@ -10,22 +10,22 @@
     <div class="container">
         <div class="jumbotron">
             <div class="row">
-                <div class="col-xs-12">
-                    <div class="text-center" id="preloader">
-                        <img src="http://kazmiruk.com/img/preloader.gif"/>
-                    </div>
+                <div class="col-xs-12 text-center">
+                    <img id="preloader" src="/img/preloader.gif"/>
                     <div id="content">
-                        <p id="quote"></p>
-                        <p id="author" class="text-italic"></p>
+                        <h3></h3>
+                        <div>
+                            <p id="temp"><span></span> °<a href="#" onclick="toggleUnits()">C</a></p>
+                            <p id="ftemp"><span></span> °<a href="#" onclick="toggleUnits()">F</a></p>
+                        </div>
 
-                        <a id="tweet" href="#" target="_blank"><img src="http://kazmiruk.com/img/twitter.png"/></a>
-
-                        <button class="btn btn-primary pull-right" id="newQuote">Next quote</button>
+                        <img title="Clouds" src="img/clouds.svg">
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <script src='scripts.js'></script>
 </body>
