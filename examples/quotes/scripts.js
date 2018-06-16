@@ -15,7 +15,7 @@ var getQuote = function() {
         },
         url: 'https://andruxnet-random-famous-quotes.p.mashape.com/cat=',
         success: function(response) {
-            var r = JSON.parse(response);
+            var r = response[0];
             var tweet = r.quote + " " + r.author;
 
             jQuery('#quote').text('"' + r.quote + '"');
