@@ -19,7 +19,7 @@
 
               item.ranges.map(async range => {
                 const result = await book.getRange(range);
-                document.body.innerHTML += `${result.toString()}<hr>`;
+                document.body.innerHTML += `${result.extractContents()}<hr>`;
               });
             }
           } else {
