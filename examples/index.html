@@ -6,7 +6,33 @@
 </head>
 <body>
 <script>
-  var book = ePub("moby-dick.epub");
+  const book = ePub("moby-dick.epub");
+  function showNarratives(book, id) {
+    id = id.replace('#', '');
+    book.load('../META-INF/narratives.json').then(narratives => {
+      document.body.innerHTML = '';
+      narratives.map(item => {
+        if (id) {
+          if (id === `${item.id}`) {
+            document.body.innerHTML += `<a href="#">List</a><br/><h1>${item.title}</h1><small>${item.description}</small><hr/>`;
+
+            item.ranges.map(async range => {
+              const result = await book.getRange(range);
+              document.body.innerHTML += `${result.toString()}<hr>`;
+            });
+          }
+        } else {
+          document.body.innerHTML += `<a href="#${item.id}">${item.title}</a><br/>`;
+        }
+      });
+    });
+  }
+
+  showNarratives(book, window.location.hash);
+
+  window.onhashchange = function () {
+    showNarratives(book, window.location.hash);
+  }
 </script>
 </body>
 </html>
