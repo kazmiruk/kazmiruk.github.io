@@ -20,7 +20,7 @@
               item.ranges.map(async range => {
                 const result = await book.getRange(range);
                 document.body.appendChild(result.cloneContents());
-                document.body.innerHTML += `<br/>`;
+                document.body.innerHTML += `<hr/>`;
               });
             }
           } else {
