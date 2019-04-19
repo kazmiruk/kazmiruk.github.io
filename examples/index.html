@@ -19,7 +19,8 @@
 
               item.ranges.map(async range => {
                 const result = await book.getRange(range);
-                document.body.innerHTML += `${result.extractContents()}<hr>`;
+                document.body.appendChild(result.cloneContents());
+                document.body.innerHTML += `<br/>`;
               });
             }
           } else {
